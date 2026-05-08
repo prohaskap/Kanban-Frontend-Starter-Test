@@ -19,6 +19,7 @@ function KanbanBoard() {
       }
       const data: Item[] = await response.json();
       setItems(data);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -28,7 +29,7 @@ function KanbanBoard() {
   };
 
   useEffect(() => {
-    fetchItems();
+    void (async () => { await fetchItems(); })();
   }, []);
 
   if (loading) {
@@ -122,7 +123,7 @@ function KanbanBoard() {
 
       toast.success(`Item ${itemId} moved to ${newState}`);
       fetchItems(); // Reload items to ensure consistency
-
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error('Error updating item state:', error);
       toast.error(`Failed to move item ${itemId}: ${error.message}`);
