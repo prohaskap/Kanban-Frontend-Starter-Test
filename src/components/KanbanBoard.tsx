@@ -19,7 +19,7 @@ function KanbanBoard() {
       }
       const data: Item[] = await response.json();
       setItems(data);
-    } catch (err: any) {
+    } catch (err: unknown) {
       setError(err.message);
     } finally {
       setLoading(false);
@@ -28,7 +28,7 @@ function KanbanBoard() {
   };
 
   useEffect(() => {
-    fetchItems();
+    void (async () => { await fetchItems(); })();
   }, []);
 
   if (loading) {
@@ -123,7 +123,7 @@ function KanbanBoard() {
       toast.success(`Item ${itemId} moved to ${newState}`);
       fetchItems(); // Reload items to ensure consistency
 
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error updating item state:', error);
       toast.error(`Failed to move item ${itemId}: ${error.message}`);
       // Revert state on error

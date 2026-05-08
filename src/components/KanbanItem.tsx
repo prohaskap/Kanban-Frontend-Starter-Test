@@ -39,6 +39,7 @@ function KanbanItem({ item, onSave, onCancel }: KanbanItemProps) {
   useEffect(() => {
     if (item) {
       // Populate form fields if item prop is provided (editing)
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setItemData({
         title: item.title,
         description: item.description,
@@ -135,9 +136,9 @@ function KanbanItem({ item, onSave, onCancel }: KanbanItemProps) {
       toast.success(`Item ${item ? 'updated' : 'created'} successfully!`);
       onSave(); // Notify parent component to refresh/close form
 
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error saving item:', error);
-      toast.error(`Failed to save item: ${error.message}`);
+      toast.error(`Failed to save item: ${(error as Error).message}`);
     }
   };
 
