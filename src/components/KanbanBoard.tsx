@@ -19,7 +19,8 @@ function KanbanBoard() {
       }
       const data: Item[] = await response.json();
       setItems(data);
-    } catch (err: unknown) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
       setError(err.message);
     } finally {
       setLoading(false);
@@ -122,8 +123,8 @@ function KanbanBoard() {
 
       toast.success(`Item ${itemId} moved to ${newState}`);
       fetchItems(); // Reload items to ensure consistency
-
-    } catch (error: unknown) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
       console.error('Error updating item state:', error);
       toast.error(`Failed to move item ${itemId}: ${error.message}`);
       // Revert state on error
